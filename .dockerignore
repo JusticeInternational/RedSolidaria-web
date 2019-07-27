@@ -1,0 +1,9 @@
+.bundle
+.dockerignore
+.git
+.gitignore
+.env*
+Dockerfile
+log
+
+*.sql

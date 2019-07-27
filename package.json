@@ -1,0 +1,7 @@
+{
+  "name": "RedSolidaria-web",
+  "private": true,
+  "dependencies": {
+    "primer": "10.8.0"
+  }
+}

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+appdir=$(cd $(dirname "$0")/.. && pwd)
+[ -f /etc/app-env ] || exec "$(pwd)/script/app-env" $0 $@
+
+export BUNDLE_IGNORE_CONFIG=1
+
+RAILS_ENV=test bin/rails test $@

@@ -1,0 +1,27 @@
+version: "3.6"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+       - "rs-db-data:/var/lib/mysql"
+    networks:
+      - rs-net
+  rsweb:
+    image: 'rsweb'
+    build: .
+    volumes:
+      - "${VOLUME:-.:/app}"
+    ports:
+      - 3000:3000
+    networks:
+      - rs-net
+volumes:
+  rs-db-data:
+    external: true
+networks:
+  rs-net:
+    external: true
+    name: rs-net

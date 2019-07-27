@@ -1,0 +1,33 @@
+# Mysql2 setup
+#   gem install mysql2
+
+<%
+db_url = ENV['DATABASE_URL']
+db_config = nil
+if db_url.present?
+  db_config = ActiveRecord::ConnectionAdapters::ConnectionSpecification::ConnectionUrlResolver.new(db_url).to_hash
+end
+%>
+
+default: &default
+  adapter: mysql2
+  pool: 5
+<% if db_config.present? %>
+  username: <%= db_config[:username] || 'root' %>
+  password: <%= db_config[:password] %>
+  port: <%= db_config[:port] || 3306 %>
+  host: <%= db_config[:host] || 'db' %>
+  database: <%= db_config[:database] || 'rs_db' %>
+<% end %>
+
+development:
+  <<: *default
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+
+production:
+  <<: *default

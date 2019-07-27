@@ -1,0 +1,27 @@
+#!/bin/bash
+cd "$(dirname "$0")/.."
+
+echo "Checking Database..."
+DB_CONTAINER_ID=$(docker-compose ps -q db)
+if [ -z "$DB_CONTAINER_ID" ]; then
+  echo "Attempting to start Database..."
+  docker-compose up -d db
+else
+  if [ $(docker inspect $DB_CONTAINER_ID --format={{.State.ExitCode}}) -ne 0 ] || [ $(docker inspect $DB_CONTAINER_ID --format={{.State.Running}}) == 'false' ]; then
+    echo "Database is not running, attempting restart..."
+    docker-compose up --force-recreate -d db
+  fi
+fi
+
+# wait for DB to come up
+script/poll-for-db
+
+# stop services if something fails or we ctrl-C
+function go_down() {
+  docker-compose stop rsweb
+}
+
+trap go_down EXIT HUP INT QUIT PIPE TERM
+
+# start up services
+docker-compose up rsweb

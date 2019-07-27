@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -eu
+
+[ -f /etc/app-env ] && exit 0
+
+if [ "$(uname -s)" = "Darwin" ]; then
+  cd "$(dirname "$0")/.."
+
+  if ! [ -f /usr/local/bin/docker-compose ]; then
+  	echo "You must run Docker for Mac and let it install its tools."
+  	# If the user customized their Docker appdir, `open` might not
+  	# be able to find it.
+  	open -a Docker 2>/dev/null || true
+  	exit 1
+  fi
+
+  if [ `node --version` != 'v9.8.0' ]; then
+    if [ -e "${HOME}/.nvm" ] && [ -f "/usr/local/opt/nvm/nvm.sh" ] ; then
+      source "/usr/local/opt/nvm/nvm.sh"
+      echo "Using nvm 9.8.0"
+      nvm use 9.8.0 || echo "Failed to set nvm use 9.8.0"
+    else
+      echo "Node version v9.8.0 is required, try downloading nvm to install."
+      exit 1
+    fi
+  fi
+  npm install
+fi
+
+if [ ${1:-""} = "--pristine" ]; then
+  docker-compose build --no-cache
+else
+  docker-compose build
+fi
+
+if [ "$(docker volume ls -q -f name=rs-db-data)" = "" ]; then
+  echo "Creating named Docker volume 'rs-db-data' for MySQL..."
+  docker volume create rs-db-data
+fi
+
+if [ "$(docker network ls -q -f name=rs-net)" = "" ]; then
+  echo "Creating named Docker network 'rs-net' ..."
+  docker network create rs-net
+fi

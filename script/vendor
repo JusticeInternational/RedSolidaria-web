@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "Updating vendor cache using docker image"
+
+docker run -v $(pwd):/app \
+  -w /app \
+  ruby:$(cat .ruby-version) bash -c '\
+set -eu
+rm -f Gemfile.lock && \
+rm -rf vendor/cache && \
+mkdir -p vendor/cache && \
+ruby --version && \
+gem install bundler && \
+bundler update && \
+bundle install --local && \
+ls -altr vendor/cache; \
+'

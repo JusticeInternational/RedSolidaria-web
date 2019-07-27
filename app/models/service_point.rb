@@ -1,0 +1,2 @@
+class ServicePoint < ApplicationRecord
+end

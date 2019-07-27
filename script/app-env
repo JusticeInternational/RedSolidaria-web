@@ -1,0 +1,14 @@
+#!/bin/bash
+# Run a command in the app's development environment.
+
+set -e
+
+appdir=$(cd $(dirname "$0")/.. && pwd)
+[ -f /etc/app-env ] && exec "$@"
+
+cmd="$@"; [ "$#" -eq 0 ] && cmd=bash
+export VOLUME="$appdir:/app"
+image=${DOCKER_IMAGE:-rsweb}
+
+port_publish=""; [ "${BIND_DOCKER_SERVICE_PORTS:-}" = 1 ] && port_publish="--service-ports"
+exec docker-compose run $port_publish --rm $image $cmd

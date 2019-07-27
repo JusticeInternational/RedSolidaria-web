@@ -1,0 +1,26 @@
+#!/bin/bash
+# script/setup: Set up application for the first time after cloning, or set it
+#               back to the initial first unused state.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+script/bootstrap
+
+appdir=$(cd $(dirname "$0")/.. && pwd)
+[ -f /etc/app-env ] || {
+  docker-compose up -d db
+
+  # Wait for the DB before running in the container
+  script/poll-for-db
+
+  exec "$appdir/script/app-env" $0 $@
+}
+
+mkdir -p tmp/pids tmp/logs
+
+export BUNDLE_IGNORE_CONFIG=1
+bundle exec rake dotenv db:create db:structure:load db:seed
+export RAILS_ENV=test
+bundle exec rake dotenv db:create db:test:prepare

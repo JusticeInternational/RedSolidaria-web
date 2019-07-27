@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Service_Point_ID: 
+  Created_Date_Time: 2019-07-27
+  Last_Modification_Date_Time: 2019-07-27
+  Service_Point_Name: MyString
+  Contact_User_Profile_ID: 1
+  Admin_User_Profile_ID: 1
+  Address_Street_1: MyString
+  Address_Street_2: MyString
+  City: MyString
+  Country: MyString
+  Longitude: 1.5
+  Latitude: 1.5
+  Services_Available: MyString
+  Infrastructure_Type: MyString
+  Overall_Capacity: 1
+  Overall_Rating: 1
+  Promoted: false
+
+two:
+  Service_Point_ID: 
+  Created_Date_Time: 2019-07-27
+  Last_Modification_Date_Time: 2019-07-27
+  Service_Point_Name: MyString
+  Contact_User_Profile_ID: 1
+  Admin_User_Profile_ID: 1
+  Address_Street_1: MyString
+  Address_Street_2: MyString
+  City: MyString
+  Country: MyString
+  Longitude: 1.5
+  Latitude: 1.5
+  Services_Available: MyString
+  Infrastructure_Type: MyString
+  Overall_Capacity: 1
+  Overall_Rating: 1
+  Promoted: false

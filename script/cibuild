@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+function cleanup() {
+  echo
+  echo "%%%FOLD {Shutting down services...}%%%"
+  docker-compose down -v
+  echo "%%%END FOLD%%%"
+}
+
+trap cleanup EXIT
+
+cd "$(dirname "$0")/.."
+
+script/setup
+docker-compose up -d
+script/poll-for-db
+
+echo "%%%FOLD {Setting up clean database...}%%%"
+script/app-env bin/rake db:create db:test:prepare db:migrate
+script/app-env bin/rails db:environment:set RAILS_ENV=test || true
+echo "%%%END FOLD%%%"
+
+script/test
