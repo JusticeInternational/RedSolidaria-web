@@ -1,0 +1,14 @@
+name: Main CI Build Test
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Test cibuild
+      run: ./script/cibuild
