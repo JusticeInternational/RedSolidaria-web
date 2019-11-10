@@ -24,11 +24,9 @@ Things you might need to know on this project:
 
 * ...
 
-## Creating tables
-1. Run `script/setup` to get the database running
-1. Use `script/app-env` to access the running container
-1. Use `rails g model ...` to create any new tables or modify models
-1. Apply and dump the schema with `rake db:migrate db:structure:dump`
+## Some Developer How to's
+- [Setup a new database entity](docs/Manage_Entities.md)
+
 # Troubleshooting
 
 ## Can't find gem bundler
