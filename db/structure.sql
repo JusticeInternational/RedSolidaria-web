@@ -56,6 +56,21 @@ CREATE TABLE `service_points` (
   UNIQUE KEY `index_service_points_on_Service_Point_ID` (`Service_Point_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `versions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `versions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `major` int(11) DEFAULT NULL,
+  `minor` int(11) DEFAULT NULL,
+  `patch` int(11) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -67,6 +82,7 @@ CREATE TABLE `service_points` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
-('20190727150957');
+('20190727150957'),
+('20191110191959');
 
 
