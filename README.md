@@ -26,6 +26,7 @@ Things you might need to know on this project:
 
 ## Some Developer How to's
 - [Setup a new database entity](docs/Manage_Entities.md)
+- [What we use for CI/CD](https://github.com/JusticeInternational/RedSolidaria-web/actions)
 
 # Troubleshooting
 
